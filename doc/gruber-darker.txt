@@ -1,0 +1,1472 @@
+*gruber-darker.txt*  Faithful Vim/Neovim port of gruber-darker-theme.el
+
+                        GRUBER-DARKER COLORSCHEME                    *gruber-darker*
+
+Author:         ThunderBoltCODMYT
+License:        MIT
+Repository:     https://github.com/ThunderBoltCODMYT/gruber-darker.vim
+Version:        1.0.0
+
+================================================================================
+CONTENTS                                                *gruber-darker-contents*
+
+    1. Introduction ............................ |gruber-darker-introduction|
+    2. Requirements ............................ |gruber-darker-requirements|
+    3. Installation ............................ |gruber-darker-installation|
+    4. Quick Start ............................. |gruber-darker-quick-start|
+    5. Configuration ........................... |gruber-darker-configuration|
+        5.1 Options ............................ |gruber-darker-options|
+        5.2 Commands ........................... |gruber-darker-commands|
+    6. Plugin Integration ...................... |gruber-darker-integration|
+        6.1 vim-airline ........................ |gruber-darker-airline|
+        6.2 lightline .......................... |gruber-darker-lightline|
+        6.3 lualine ............................ |gruber-darker-lualine|
+        6.4 Treesitter ......................... |gruber-darker-treesitter|
+        6.5 LSP Diagnostics .................... |gruber-darker-lsp|
+    7. Advanced Usage .......................... |gruber-darker-advanced|
+        7.1 Palette Customization .............. |gruber-darker-palette|
+        7.2 Highlight Overrides ................ |gruber-darker-highlights|
+    8. Language Support ........................ |gruber-darker-languages|
+    9. Troubleshooting ......................... |gruber-darker-troubleshooting|
+   10. API Reference ........................... |gruber-darker-api|
+   11. Changelog ............................... |gruber-darker-changelog|
+   12. Credits ................................. |gruber-darker-credits|
+
+================================================================================
+1. INTRODUCTION                                     *gruber-darker-introduction*
+
+Gruber-darker is a meticulously crafted Vim/Neovim colorscheme that provides a
+faithful port of the renowned gruber-darker Emacs theme. Originally created by
+Jason R. Blevins and subsequently maintained by Alexey Kutepov (rexim), this
+theme has established itself as a preferred choice for developers who value
+warm, low-contrast color palettes optimized for extended coding sessions.
+
+DESIGN PHILOSOPHY~
+
+The gruber-darker colorscheme adheres to the following principles:
+
+    • Pixel-perfect color accuracy to the original Emacs implementation
+    • Low-contrast design to reduce eye strain during prolonged usage
+    • Warm color temperature for comfortable viewing
+    • Carefully selected accent colors for optimal code readability
+    • Semantic highlighting that respects language syntax structures
+
+FEATURE OVERVIEW~
+
+This implementation provides:
+
+    • Cross-platform compatibility (Vim 8.0+, Neovim 0.5+)
+    • Comprehensive plugin ecosystem support
+    • 85+ Treesitter highlight group definitions
+    • LSP diagnostic integration with semantic highlighting
+    • Terminal color definitions for consistent experience
+    • Extensive customization capabilities
+    • Robust error handling and validation
+    • Professional-grade documentation
+
+TARGET AUDIENCE~
+
+This colorscheme is designed for:
+
+    • Developers transitioning from Emacs to Vim/Neovim
+    • Users seeking a mature, low-contrast theme
+    • Professionals requiring consistent cross-editor theming
+    • Developers working with Java, C#, C, C++, and web technologies
+
+================================================================================
+2. REQUIREMENTS                                     *gruber-darker-requirements*
+
+MINIMUM REQUIREMENTS~
+
+    Vim:        Version 8.0 or higher
+    Neovim:     Version 0.5.0 or higher
+    Terminal:   True color (24-bit) support recommended
+
+RECOMMENDED ENVIRONMENT~
+
+    • Terminal with italic font support
+    • GUI: GVim, MacVim, Neovim-Qt, or similar
+    • Terminal: iTerm2, Alacritty, WezTerm, Windows Terminal
+    • Nerd Fonts for optimal statusline appearance (optional)
+
+VERIFICATION~
+
+To verify your environment meets the requirements:
+>
+    " Check Vim version
+    :version
+    
+    " Check true color support
+    :echo has('termguicolors')
+    
+    " Check italic support
+    :echo &t_ZH
+<
+
+NOTE: While the colorscheme functions in 256-color terminals, true color
+support is strongly recommended for optimal visual fidelity.
+
+================================================================================
+3. INSTALLATION                                     *gruber-darker-installation*
+
+Choose one of the following installation methods based on your plugin manager
+preference. All methods are functionally equivalent.
+
+--------------------------------------------------------------------------------
+3.1 VIM-PLUG                                        *gruber-darker-install-plug*
+>
+    call plug#begin('~/.vim/plugged')
+      Plug 'ThunderBoltCODMYT/gruber-darker.vim'
+    call plug#end()
+<
+Execute in Vim:
+>
+    :PlugInstall
+<
+
+--------------------------------------------------------------------------------
+3.2 PACKER.NVIM                                   *gruber-darker-install-packer*
+>
+    use {
+      'ThunderBoltCODMYT/gruber-darker.vim',
+      config = function()
+        vim.cmd('colorscheme gruber-darker')
+      end
+    }
+<
+Execute in Neovim:
+>
+    :PackerSync
+<
+
+--------------------------------------------------------------------------------
+3.3 LAZY.NVIM                                       *gruber-darker-install-lazy*
+>
+    {
+      'ThunderBoltCODMYT/gruber-darker.vim',
+      lazy = false,
+      priority = 1000,
+      config = function()
+        vim.cmd('colorscheme gruber-darker')
+      end,
+    }
+<
+
+--------------------------------------------------------------------------------
+3.4 MANUAL INSTALLATION                          *gruber-darker-install-manual*
+
+For Vim:
+>
+    git clone https://github.com/ThunderBoltCODMYT/gruber-darker.vim \
+      ~/.vim/pack/colorschemes/start/gruber-darker
+<
+
+For Neovim (Unix/Linux/macOS):
+>
+    git clone https://github.com/ThunderBoltCODMYT/gruber-darker.vim \
+      ~/.config/nvim/pack/colorschemes/start/gruber-darker
+<
+
+For Neovim (Windows):
+>
+    git clone https://github.com/ThunderBoltCODMYT/gruber-darker.vim ^
+      %LOCALAPPDATA%\nvim\pack\colorschemes\start\gruber-darker
+<
+
+POST-INSTALLATION~
+
+After installation, generate help tags:
+>
+    :helptags ALL
+<
+
+Verify installation:
+>
+    :colorscheme gruber-darker
+    :GruberHealth
+<
+
+================================================================================
+4. QUICK START                                       *gruber-darker-quick-start*
+
+BASIC SETUP (VIM)~
+>
+    " In .vimrc or init.vim
+    set termguicolors
+    colorscheme gruber-darker
+<
+
+BASIC SETUP (NEOVIM WITH LUA)~
+>
+    -- In init.lua
+    vim.opt.termguicolors = true
+    vim.cmd('colorscheme gruber-darker')
+<
+
+RECOMMENDED SETUP (VIM)~
+>
+    " Enable true colors
+    set termguicolors
+    
+    " Configure theme before loading
+    let g:gruber_contrast = 'medium'
+    let g:gruber_bold_keywords = 1
+    let g:gruber_italic_comments = 1
+    
+    " Load colorscheme
+    colorscheme gruber-darker
+    
+    " Configure statusline (if using vim-airline)
+    let g:airline_theme = 'gruber_darker'
+<
+
+RECOMMENDED SETUP (NEOVIM WITH LUA)~
+>
+    -- Enable true colors
+    vim.opt.termguicolors = true
+    
+    -- Configure theme
+    vim.g.gruber_contrast = 'medium'
+    vim.g.gruber_bold_keywords = 1
+    vim.g.gruber_italic_comments = 1
+    
+    -- Load colorscheme
+    vim.cmd('colorscheme gruber-darker')
+    
+    -- Configure statusline (if using lualine)
+    require('lualine').setup {
+      options = { theme = 'gruber-darker' }
+    }
+<
+
+VERIFICATION~
+
+Verify the theme loaded correctly:
+>
+    :GruberInfo
+<
+
+This command displays the active configuration and color palette.
+
+================================================================================
+5. CONFIGURATION                                   *gruber-darker-configuration*
+
+All configuration options must be set before loading the colorscheme. Modifying
+options after the colorscheme has been loaded requires reloading:
+>
+    :colorscheme gruber-darker
+<
+
+================================================================================
+5.1 OPTIONS                                             *gruber-darker-options*
+
+--------------------------------------------------------------------------------
+                                                            *g:gruber_contrast*
+g:gruber_contrast
+
+    Type:           String
+    Default:        'medium'
+    Valid values:   'soft', 'medium', 'hard'
+    
+    Description:
+    Controls the background contrast level. Higher contrast provides better
+    distinction between background and foreground elements but may increase
+    eye strain during extended sessions.
+    
+    Contrast levels:
+        'soft'      Minimal contrast (#1c1c1c background)
+        'medium'    Balanced contrast (#181818 background)
+        'hard'      Maximum contrast (#141414 background)
+    
+    Example:
+>
+        let g:gruber_contrast = 'hard'
+        colorscheme gruber-darker
+<
+    WARNING: Invalid values will trigger a warning message and default to
+    'medium'. Type validation ensures only string values are accepted.
+
+--------------------------------------------------------------------------------
+                                                       *g:gruber_transparent_bg*
+g:gruber_transparent_bg
+
+    Type:           Number (Boolean)
+    Default:        0
+    Valid values:   0, 1
+    
+    Description:
+    Enables transparent background, allowing the terminal emulator's
+    background to show through. Useful for terminal transparency effects or
+    background images.
+    
+    Values:
+        0           Opaque background (default)
+        1           Transparent background
+    
+    Example:
+>
+        let g:gruber_transparent_bg = 1
+        colorscheme gruber-darker
+<
+    NOTE: Transparency requires terminal emulator support. This option has no
+    effect in GUI Vim variants (GVim, MacVim).
+
+--------------------------------------------------------------------------------
+                                                        *g:gruber_bold_keywords*
+g:gruber_bold_keywords
+
+    Type:           Number (Boolean)
+    Default:        1
+    Valid values:   0, 1
+    
+    Description:
+    Controls bold font weight for language keywords (if, for, while, class,
+    etc.). Bold keywords improve scannability but may not render correctly on
+    all terminals or with certain fonts.
+    
+    Values:
+        0           Normal weight keywords
+        1           Bold weight keywords (default)
+    
+    Example:
+>
+        let g:gruber_bold_keywords = 0
+        colorscheme gruber-darker
+<
+    NOTE: Bold rendering depends on terminal and font capabilities. Use
+    |:GruberHealth| to verify proper rendering.
+
+--------------------------------------------------------------------------------
+                                                      *g:gruber_italic_comments*
+g:gruber_italic_comments
+
+    Type:           Number (Boolean)
+    Default:        1
+    Valid values:   0, 1
+    
+    Description:
+    Enables italic font style for comments. Italic comments provide visual
+    distinction but require terminal and font support for italic rendering.
+    
+    Values:
+        0           Normal style comments
+        1           Italic style comments (default)
+    
+    Example:
+>
+        let g:gruber_italic_comments = 0
+        colorscheme gruber-darker
+<
+    TROUBLESHOOTING: If italics do not render, verify terminal support by
+    checking the value of |&t_ZH|. See |gruber-darker-troubleshooting| for
+    detailed resolution steps.
+
+--------------------------------------------------------------------------------
+                                                            *g:gruber_palette*
+g:gruber_palette
+
+    Type:           Dictionary
+    Default:        {} (empty dictionary)
+    Format:         { 'colorname': ['#hexcolor', cterm_number] }
+    
+    Description:
+    Provides fine-grained control over individual palette colors. Each entry
+    must conform to the format: ['#RRGGBB', 0-255]. All entries are validated
+    before application; malformed entries trigger warnings and are skipped.
+    
+    Available color names:
+        fg, fg1, fg2, white, black
+        bg_1, bg, bg1, bg2, bg3, bg4
+        red_1, red, red1, green, yellow
+        brown, quartz, niagara2, niagara1, niagara, wisteria
+    
+    Example:
+>
+        let g:gruber_palette = {
+          \ 'yellow':   ['#ffee00', 226],
+          \ 'green':    ['#7fdf40', 77],
+          \ 'niagara':  ['#a0b6d8', 152]
+          \ }
+        colorscheme gruber-darker
+<
+    VALIDATION: Each entry undergoes comprehensive validation:
+        • Type checking (must be Dictionary)
+        • Structure validation (must be 2-element List)
+        • Hex format validation (must match #[0-9a-fA-F]{6})
+        • Cterm range validation (must be 0-255 or 'NONE')
+    
+    See |gruber-darker-palette| for detailed customization examples.
+
+--------------------------------------------------------------------------------
+                                                   *g:gruber_custom_highlights*
+g:gruber_custom_highlights
+
+    Type:           Dictionary
+    Default:        {} (empty dictionary)
+    Format:         { 'GroupName': 'attribute_string' }
+    
+    Description:
+    Allows complete override of any highlight group. Useful for personal
+    preferences or integration with third-party plugins not covered by
+    default configuration.
+    
+    Example:
+>
+        let g:gruber_custom_highlights = {
+          \ 'CursorLine':   'guibg=#202020',
+          \ 'Comment':      'guifg=#999999 gui=italic',
+          \ 'Todo':         'guifg=#000000 guibg=#ffff00 gui=bold',
+          \ 'MatchParen':   'guifg=#ffdd33 guibg=#484848 gui=bold'
+          \ }
+        colorscheme gruber-darker
+<
+    VALIDATION: Each entry undergoes validation to prevent configuration
+    errors. Invalid entries are skipped with warning messages.
+    
+    See |gruber-darker-highlights| for advanced customization patterns.
+
+================================================================================
+5.2 COMMANDS                                           *gruber-darker-commands*
+
+All commands are available after loading the colorscheme. Commands support tab
+completion where applicable.
+
+--------------------------------------------------------------------------------
+                                                            *:GruberContrast*
+:GruberContrast {level}
+
+    Arguments:      soft | medium | hard
+    Completion:     Tab completion supported
+    
+    Description:
+    Dynamically adjusts background contrast without requiring manual
+    colorscheme reload. Changes take effect immediately.
+    
+    Usage:
+>
+        :GruberContrast soft
+        :GruberContrast medium
+        :GruberContrast hard
+<
+    NOTE: This command updates |g:gruber_contrast| and automatically reloads
+    the colorscheme. Invalid arguments trigger an error message with valid
+    options displayed.
+
+--------------------------------------------------------------------------------
+                                                               *:GruberHealth*
+:GruberHealth
+
+    Arguments:      None
+    
+    Description:
+    Performs comprehensive environment diagnostics and displays results in a
+    formatted report. Checks include:
+        • True color support detection
+        • |termguicolors| setting verification
+        • Treesitter installation status (Neovim only)
+        • Italic font support detection
+        • Vim version compatibility
+    
+    Usage:
+>
+        :GruberHealth
+<
+    Output example:
+>
+        Gruber-Darker Theme Diagnostics
+        --------------------------------
+        ✓ Truecolor supported
+        ✓ termguicolors enabled
+        ✓ Treesitter detected
+        ⚠ Italics may not render — check your terminal
+        Diagnostics complete
+<
+    INTERPRETATION: ✓ indicates proper configuration, ⚠ indicates potential
+    issues requiring attention. See |gruber-darker-troubleshooting| for
+    resolution guidance.
+
+--------------------------------------------------------------------------------
+                                                                 *:GruberInfo*
+:GruberInfo
+
+    Arguments:      None
+    
+    Description:
+    Displays current theme configuration in a formatted table, including
+    active option values and core palette colors. Useful for verifying
+    configuration and debugging customization issues.
+    
+    Usage:
+>
+        :GruberInfo
+<
+    Output example:
+>
+        ┌─ Gruber-Darker ──────────────────────────────┐
+        │ Contrast        : medium                     │
+        │ Transparent bg  : off                        │
+        │ Bold keywords   : on                         │
+        │ Italic comments : on                         │
+        ├─ Palette ────────────────────────────────────┤
+        │ fg        #e4e4ef   bg        #181818        │
+        │ yellow    #ffdd33   green     #73c936        │
+        │ niagara   #96a6c8   quartz    #95a99f        │
+        │ wisteria  #9e95c7   brown     #cc8c3c        │
+        │ red       #f43841   red-1     #c73c3f        │
+        └──────────────────────────────────────────────┘
+<
+
+--------------------------------------------------------------------------------
+                                                                 *:GruberHelp*
+:GruberHelp
+
+    Arguments:      None
+    
+    Description:
+    Provides quick access to theme documentation. Attempts to open this help
+    file via |:help|. If help tags have not been generated, displays inline
+    quick reference information.
+    
+    Usage:
+>
+        :GruberHelp
+<
+    NOTE: If help tags are not available, execute |:helptags| |ALL| to enable
+    proper help file integration.
+
+--------------------------------------------------------------------------------
+                                                     *:GruberToggleTransparent*
+:GruberToggleTransparent
+
+    Arguments:      None
+    
+    Description:
+    Toggles transparent background on/off. Updates |g:gruber_transparent_bg|
+    and automatically reloads the colorscheme.
+    
+    Usage:
+>
+        :GruberToggleTransparent
+<
+    Feedback: Displays confirmation message indicating new state.
+
+--------------------------------------------------------------------------------
+                                                           *:GruberToggleBold*
+:GruberToggleBold
+
+    Arguments:      None
+    
+    Description:
+    Toggles bold font weight for keywords. Updates |g:gruber_bold_keywords|
+    and automatically reloads the colorscheme.
+    
+    Usage:
+>
+        :GruberToggleBold
+<
+    Feedback: Displays confirmation message indicating new state.
+
+--------------------------------------------------------------------------------
+                                                         *:GruberToggleItalic*
+:GruberToggleItalic
+
+    Arguments:      None
+    
+    Description:
+    Toggles italic font style for comments. Updates
+    |g:gruber_italic_comments| and automatically reloads the colorscheme.
+    
+    Usage:
+>
+        :GruberToggleItalic
+<
+    Feedback: Displays confirmation message indicating new state.
+
+================================================================================
+6. PLUGIN INTEGRATION                               *gruber-darker-integration*
+
+Gruber-darker provides native integration with popular Vim/Neovim plugins.
+Integration themes are included in the distribution and require no additional
+installation.
+
+================================================================================
+6.1 VIM-AIRLINE                                         *gruber-darker-airline*
+
+PREREQUISITES~
+>
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+<
+
+BASIC CONFIGURATION~
+>
+    colorscheme gruber-darker
+    let g:airline_theme = 'gruber_darker'
+<
+
+ADVANCED CONFIGURATION~
+>
+    " Enable powerline symbols (requires Nerd Font)
+    let g:airline_powerline_fonts = 1
+    
+    " Configure theme
+    let g:airline_theme = 'gruber_darker'
+    
+    " Enable tabline
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#formatter = 'unique_tail'
+    
+    " Configure extensions
+    let g:airline#extensions#branch#enabled = 1
+    let g:airline#extensions#hunks#enabled = 1
+    let g:airline#extensions#coc#enabled = 1
+<
+
+SUPPORTED MODES~
+
+    The airline theme provides distinct colors for all editor modes:
+        • Normal        Yellow accent (#ffdd33)
+        • Insert        Green accent (#73c936)
+        • Visual        Blue accent (#96a6c8)
+        • Replace       Red accent (#f43841)
+        • Command       Brown accent (#cc8c3c)
+        • Terminal      Purple accent (#9e95c7)
+
+FEATURES~
+
+    • Mode-specific color schemes with semantic meaning
+    • Warning indicators (brown/gold background)
+    • Error indicators (red background)
+    • Full tabline theming support
+    • Modified buffer indicators
+    • Branch name display with git integration
+
+================================================================================
+6.2 LIGHTLINE                                         *gruber-darker-lightline*
+
+PREREQUISITES~
+>
+    Plug 'itchyny/lightline.vim'
+<
+
+BASIC CONFIGURATION~
+>
+    colorscheme gruber-darker
+    let g:lightline = {
+      \ 'colorscheme': 'gruber_darker',
+      \ }
+<
+
+ADVANCED CONFIGURATION~
+>
+    let g:lightline = {
+      \ 'colorscheme': 'gruber_darker',
+      \ 'active': {
+      \   'left': [
+      \     [ 'mode', 'paste' ],
+      \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \   ],
+      \   'right': [
+      \     [ 'lineinfo' ],
+      \     [ 'percent' ],
+      \     [ 'fileformat', 'fileencoding', 'filetype' ]
+      \   ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+    
+    function! LightlineFilename()
+      let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+      let modified = &modified ? ' +' : ''
+      return filename . modified
+    endfunction
+<
+
+FEATURES~
+
+    • Lightweight statusline implementation
+    • All mode colors supported
+    • Tabline integration available
+    • Minimal performance overhead
+    • Extensive customization options
+
+================================================================================
+6.3 LUALINE                                             *gruber-darker-lualine*
+
+PREREQUISITES (NEOVIM)~
+>
+    -- Packer
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'nvim-tree/nvim-web-devicons' }
+    }
+    
+    -- Lazy
+    {
+      'nvim-lualine/lualine.nvim',
+      dependencies = { 'nvim-tree/nvim-web-devicons' }
+    }
+<
+
+BASIC CONFIGURATION~
+>
+    vim.cmd('colorscheme gruber-darker')
+    require('lualine').setup {
+      options = { theme = 'gruber-darker' }
+    }
+<
+
+ADVANCED CONFIGURATION~
+>
+    require('lualine').setup {
+      options = {
+        theme = 'gruber-darker',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = true,
+        refresh = {
+          statusline = 1000,
+          tabline = 1000,
+          winbar = 1000,
+        }
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+      },
+      tabline = {},
+      winbar = {},
+      inactive_winbar = {},
+      extensions = { 'fugitive', 'nvim-tree', 'quickfix' }
+    }
+<
+
+FEATURES~
+
+    • Modern Lua-based statusline
+    • Full LSP diagnostics integration
+    • Git status and diff information
+    • Smooth mode transitions
+    • Extensive extension ecosystem
+    • Minimal configuration overhead
+
+================================================================================
+6.4 TREESITTER                                       *gruber-darker-treesitter*
+
+PREREQUISITES (NEOVIM)~
+>
+    -- Packer
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate'
+    }
+    
+    -- Lazy
+    {
+      'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdate',
+    }
+<
+
+BASIC CONFIGURATION~
+>
+    vim.cmd('colorscheme gruber-darker')
+    
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+      highlight = { enable = true },
+    }
+<
+
+RECOMMENDED CONFIGURATION~
+>
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = {
+        "c", "cpp", "java", "c_sharp",
+        "lua", "vim", "vimdoc", "query",
+        "python", "javascript", "typescript",
+        "rust", "go", "bash",
+        "html", "css", "json", "yaml", "toml"
+      },
+      
+      sync_install = false,
+      auto_install = true,
+      
+      highlight = {
+        enable = true,
+        
+        disable = function(lang, buf)
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat,
+                                  vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
+        
+        additional_vim_regex_highlighting = false,
+      },
+      
+      indent = { enable = true },
+      incremental_selection = { enable = true },
+    }
+<
+
+SUPPORTED HIGHLIGHT GROUPS~
+
+    Gruber-darker defines 85+ Treesitter highlight groups organized into
+    semantic categories:
+
+    Core Syntax:
+        @comment, @comment.documentation
+        @string, @string.documentation
+        @character, @number, @float, @boolean
+
+    Functions and Methods:
+        @function, @function.call, @function.builtin
+        @method, @method.call, @constructor
+
+    Keywords and Control Flow:
+        @keyword, @keyword.return, @keyword.function
+        @conditional, @repeat, @exception
+
+    Types and Constants:
+        @type, @type.builtin, @type.definition
+        @constant, @constant.builtin, @variable
+
+    Markup (Markdown, RST, etc.):
+        @markup.heading, @markup.strong, @markup.emphasis
+        @markup.link, @markup.raw, @markup.list
+
+    LSP Semantic Tokens:
+        @lsp.type.class, @lsp.type.function
+        @lsp.type.parameter, @lsp.type.variable
+
+    See |gruber-darker-languages| for language-specific details.
+
+NO ADDITIONAL CONFIGURATION REQUIRED~
+
+    All Treesitter highlight groups are automatically configured upon
+    colorscheme activation. No manual group definitions are necessary.
+
+================================================================================
+6.5 LSP DIAGNOSTICS                                        *gruber-darker-lsp*
+
+PREREQUISITES (NEOVIM)~
+>
+    use 'neovim/nvim-lspconfig'
+<
+
+BASIC SETUP~
+>
+    vim.cmd('colorscheme gruber-darker')
+    
+    -- LSP diagnostics are automatically configured
+    require('lspconfig').pyright.setup{}
+<
+
+DIAGNOSTIC SIGNS CONFIGURATION~
+>
+    local signs = {
+      Error = "✘",
+      Warn  = "▲",
+      Hint  = "⚑",
+      Info  = "»",
+    }
+    
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, {
+        text = icon,
+        texthl = hl,
+        numhl = hl
+      })
+    end
+<
+
+DIAGNOSTIC DISPLAY CONFIGURATION~
+>
+    vim.diagnostic.config({
+      virtual_text = {
+        prefix = '●',
+        source = 'if_many',
+        spacing = 4,
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+      float = {
+        source = 'always',
+        border = 'rounded',
+      },
+    })
+<
+
+SUPPORTED DIAGNOSTIC LEVELS~
+
+    Error:      Red foreground (#f43841), bold weight
+                Indicates critical errors requiring immediate attention
+    
+    Warning:    Yellow foreground (#ffdd33), bold weight
+                Indicates potential issues or style violations
+    
+    Info:       Blue foreground (#96a6c8), normal weight
+                Provides informational messages
+    
+    Hint:       Gray foreground (#95a99f), normal weight
+                Suggests potential improvements
+
+VIRTUAL TEXT AND UNDERLINES~
+
+    Diagnostic virtual text and underlines utilize undercurl when supported by
+    the terminal. Colors match the severity levels defined above.
+
+================================================================================
+7. ADVANCED USAGE                                       *gruber-darker-advanced*
+
+================================================================================
+7.1 PALETTE CUSTOMIZATION                              *gruber-darker-palette*
+
+UNDERSTANDING THE PALETTE STRUCTURE~
+
+    The gruber-darker palette consists of 23 carefully selected colors
+    organized into semantic categories:
+
+    Foreground Colors:
+        fg          #e4e4ef     Primary foreground
+        fg1         #f4f4ff     Bright foreground
+        fg2         #f5f5f5     Alternative foreground
+        white       #ffffff     Pure white
+
+    Background Colors:
+        bg_1        #101010     Darkest background
+        bg          #181818     Primary background
+        bg1         #282828     Light background
+        bg2         #453d41     Highlight background
+        bg3         #484848     Selection background
+        bg4         #52494e     Border background
+
+    Accent Colors:
+        yellow      #ffdd33     Keywords, emphasis
+        green       #73c936     Strings, success
+        niagara     #96a6c8     Functions, information
+        quartz      #95a99f     Types, hints
+        wisteria    #9e95c7     Special constructs
+        brown       #cc8c3c     Comments, warnings
+        red         #f43841     Errors, deletions
+        red_1       #c73c3f     Alternative red
+        red1        #ff4f58     Bright red
+
+CUSTOMIZATION EXAMPLES~
+
+Example 1: Warmer Yellow
+>
+    let g:gruber_palette = {
+      \ 'yellow': ['#ffee00', 226]
+      \ }
+<
+
+Example 2: Brighter Strings
+>
+    let g:gruber_palette = {
+      \ 'green': ['#7fdf40', 77]
+      \ }
+<
+
+Example 3: Multiple Overrides
+>
+    let g:gruber_palette = {
+      \ 'yellow':   ['#ffee00', 226],
+      \ 'green':    ['#7fdf40', 77],
+      \ 'niagara':  ['#a0b6d8', 152],
+      \ 'red':      ['#ff5555', 203]
+      \ }
+<
+
+VALIDATION BEHAVIOR~
+
+    Each palette entry undergoes comprehensive validation. Invalid entries are
+    rejected with detailed error messages indicating the specific issue:
+
+    • Type mismatches (non-dictionary, non-list values)
+    • Structural errors (incorrect element count)
+    • Format violations (invalid hex format)
+    • Range errors (cterm value outside 0-255)
+
+    Valid entries are applied; invalid entries are skipped to ensure the
+    colorscheme remains functional even with partial configuration errors.
+
+================================================================================
+7.2 HIGHLIGHT OVERRIDES                              *gruber-darker-highlights*
+
+UNDERSTANDING HIGHLIGHT GROUPS~
+
+    Vim's syntax highlighting system uses highlight groups to define color and
+    style attributes. The |g:gruber_custom_highlights| option provides direct
+    access to these groups for fine-grained customization.
+
+BASIC OVERRIDES~
+
+Example 1: Custom Cursor Line
+>
+    let g:gruber_custom_highlights = {
+      \ 'CursorLine': 'guibg=#202020'
+      \ }
+<
+
+Example 2: Modified Comments
+>
+    let g:gruber_custom_highlights = {
+      \ 'Comment': 'guifg=#999999 gui=italic'
+      \ }
+<
+
+ADVANCED OVERRIDES~
+
+Example: Comprehensive UI Customization
+>
+    let g:gruber_custom_highlights = {
+      \ 'CursorLine':     'guibg=#202020',
+      \ 'CursorLineNr':   'guifg=#ffdd33 gui=bold',
+      \ 'LineNr':         'guifg=#666666',
+      \ 'VertSplit':      'guifg=#484848 guibg=#282828',
+      \ 'StatusLine':     'guifg=#ffffff guibg=#282828 gui=bold',
+      \ 'StatusLineNC':   'guifg=#95a99f guibg=#282828',
+      \ 'MatchParen':     'guifg=#ffdd33 guibg=#484848 gui=bold'
+      \ }
+<
+
+COMBINING WITH PALETTE CUSTOMIZATION~
+
+    Palette and highlight customizations can be combined for maximum control:
+>
+    " Override palette colors
+    let g:gruber_palette = {
+      \ 'yellow': ['#ffee00', 226]
+      \ }
+    
+    " Override specific highlight groups
+    let g:gruber_custom_highlights = {
+      \ 'Todo': 'guifg=#000000 guibg=#ffee00 gui=bold'
+      \ }
+    
+    colorscheme gruber-darker
+<
+
+ERROR HANDLING~
+
+    Invalid highlight specifications are wrapped in try-catch blocks to
+    prevent configuration errors from disrupting the entire colorscheme.
+    Errors are reported with detailed messages indicating the problematic
+    group and specification.
+
+================================================================================
+8. LANGUAGE SUPPORT                                   *gruber-darker-languages*
+
+OVERVIEW~
+
+    Gruber-darker provides enhanced syntax support for languages commonly
+    used in professional development environments. Special attention has been
+    given to C, C++, Java, and C# to ensure pixel-perfect highlighting.
+
+PRIMARY SUPPORTED LANGUAGES~
+
+    C and C++:
+        • Distinct highlighting for void keyword (yellow)
+        • Type names (int, float, double) in gray
+        • Numeric literals in white
+        • Proper differentiation between types and keywords
+        • STL container support for C++
+
+    Java:
+        • Comprehensive keyword coverage including Java 17+ features
+        • Proper generic type parameter highlighting
+        • Annotation support (@Override, @Deprecated, etc.)
+        • JPMS (module system) keyword support
+        • Boxed type and primitive type differentiation
+
+    C#:
+        • Full C# 11 keyword support
+        • LINQ keyword highlighting
+        • Async/await pattern support
+        • Attribute highlighting
+        • Generic type parameter support
+        • Preprocessor directive highlighting
+
+SECONDARY SUPPORTED LANGUAGES~
+
+    The following languages receive standard syntax highlighting with
+    Treesitter integration when available:
+
+    • Python          • JavaScript      • TypeScript
+    • Rust            • Go              • Bash/Shell
+    • HTML            • CSS             • JSON
+    • YAML            • TOML            • XML
+    • Markdown        • Lua             • Vim Script
+
+HYBRID SYNTAX APPROACH~
+
+    For maximum reliability, gruber-darker employs a hybrid syntax approach:
+
+    1. Main Theme Integration
+       Syntax overrides defined in the colorscheme file ensure consistency
+       regardless of load order.
+
+    2. After-Syntax Files
+       Dedicated syntax files in after/syntax/ directory provide additional
+       refinement loaded after Vim's default syntax.
+
+    This dual approach guarantees correct highlighting even when colorscheme
+    reloading or syntax switching occurs during a session.
+
+LANGUAGE-SPECIFIC OVERRIDE FILES~
+
+    The following after-syntax files are included:
+
+    • after/syntax/c.vim        C language overrides
+    • after/syntax/cpp.vim      C++ language overrides
+    • after/syntax/java.vim     Java language overrides
+    • after/syntax/cs.vim       C# language overrides
+
+    These files are automatically loaded by Vim when editing files of the
+    corresponding type. No manual configuration is required.
+
+================================================================================
+9. TROUBLESHOOTING                           *gruber-darker-troubleshooting*
+
+--------------------------------------------------------------------------------
+COLORS APPEAR WASHED OUT OR INCORRECT
+
+    CAUSE: Terminal does not support true colors, or |termguicolors| is not
+    enabled.
+
+    RESOLUTION:
+    1. Verify true color support:
+>
+       :echo has('termguicolors')
+<
+       Should return 1. If 0, your Vim build lacks true color support.
+
+    2. Enable true colors:
+>
+       set termguicolors
+<
+       Add to .vimrc or init.vim to persist.
+
+    3. Verify terminal emulator supports true colors:
+       • iTerm2: Supported
+       • Alacritty: Supported
+       • WezTerm: Supported
+       • Windows Terminal: Supported
+       • Terminal.app (macOS): Limited support
+       • Standard xterm: Not supported
+
+    4. Run diagnostics:
+>
+       :GruberHealth
+<
+
+--------------------------------------------------------------------------------
+ITALIC TEXT DOES NOT RENDER
+
+    CAUSE: Terminal or font does not support italic rendering, or italic
+    codes are not configured.
+
+    RESOLUTION:
+    1. Check italic support:
+>
+       :echo &t_ZH
+<
+       If empty, italic codes are not configured.
+
+    2. Configure italic codes (if supported but not configured):
+>
+       let &t_ZH = "\e[3m"
+       let &t_ZR = "\e[23m"
+<
+
+    3. If terminal does not support italics, disable:
+>
+       let g:gruber_italic_comments = 0
+       colorscheme gruber-darker
+<
+
+    4. Font considerations:
+       Ensure your font includes italic variants. Monospace fonts may lack
+       proper italic glyphs.
+
+--------------------------------------------------------------------------------
+THEME DOES NOT LOAD OR SHOWS ERRORS
+
+    CAUSE: Incorrect installation, missing files, or configuration errors.
+
+    RESOLUTION:
+    1. Verify installation:
+>
+       :echo globpath(&runtimepath, 'colors/gruber-darker.vim')
+<
+       Should return the path to gruber-darker.vim. If empty, theme is not
+       installed correctly.
+
+    2. Check for error messages:
+>
+       :messages
+<
+       Review for any errors during colorscheme loading.
+
+    3. Generate help tags:
+>
+       :helptags ALL
+<
+
+    4. Run health check:
+>
+       :GruberHealth
+<
+
+    5. Verify Vim version:
+>
+       :version
+<
+       Requires Vim 8.0+ or Neovim 0.5+.
+
+--------------------------------------------------------------------------------
+STATUSLINE THEME NOT APPLYING
+
+    CAUSE: Theme not set for statusline plugin, or plugin loaded after
+    colorscheme.
+
+    RESOLUTION:
+    1. For vim-airline:
+>
+       let g:airline_theme = 'gruber_darker'
+<
+       Place after colorscheme command.
+
+    2. For lightline:
+>
+       let g:lightline = { 'colorscheme': 'gruber_darker' }
+<
+
+    3. For lualine:
+>
+       require('lualine').setup {
+         options = { theme = 'gruber-darker' }
+       }
+<
+
+    4. Ensure plugin loads after colorscheme:
+       Check plugin manager configuration to guarantee load order.
+
+--------------------------------------------------------------------------------
+TREESITTER HIGHLIGHTING INCONSISTENT
+
+    CAUSE: Treesitter parser not installed or not enabled.
+
+    RESOLUTION:
+    1. Install required parsers:
+>
+       :TSInstall c cpp java lua vim python
+<
+
+    2. Verify Treesitter is enabled:
+>
+       :echo nvim_treesitter#statusline()
+<
+
+    3. Check highlight configuration:
+>
+       require('nvim-treesitter.configs').setup {
+         highlight = { enable = true }
+       }
+<
+
+    4. For large files, Treesitter may auto-disable:
+       Adjust file size threshold in configuration.
+
+--------------------------------------------------------------------------------
+WARNING MESSAGES ON LOAD
+
+    CAUSE: Invalid configuration options or malformed customizations.
+
+    RESOLUTION:
+    1. Review warning messages:
+       Warnings are displayed upon colorscheme load and saved in |:messages|.
+
+    2. Verify option types and values:
+       • g:gruber_contrast must be string: 'soft', 'medium', or 'hard'
+       • Boolean options must be 0 or 1 (numeric)
+       • Palette entries must follow format: ['#RRGGBB', 0-255]
+
+    3. Check for typos in option names:
+       Option names are case-sensitive.
+
+    4. Consult |:GruberInfo| for current configuration:
+>
+       :GruberInfo
+<
+
+--------------------------------------------------------------------------------
+PERFORMANCE ISSUES
+
+    CAUSE: Terminal performance limitations or conflicting plugins.
+
+    RESOLUTION:
+    1. For slow terminal rendering:
+       • Enable |lazyredraw| to reduce redraws during macros
+       • Disable cursor shape changes if configured
+
+    2. For plugin conflicts:
+       • Disable other colorschemes loaded via plugin managers
+       • Check for syntax plugins that may conflict
+
+    3. For Treesitter performance:
+       • Disable for large files (see Treesitter configuration)
+       • Use additional_vim_regex_highlighting = false
+
+================================================================================
+10. API REFERENCE                                           *gruber-darker-api*
+
+INTERNAL FUNCTIONS~
+
+    While gruber-darker does not expose a formal API, certain internal
+    functions may be useful for advanced customization:
+
+    s:hi(group, fg, bg, attr)
+        Internal highlight function. Not intended for external use.
+
+    s:set_contrast(level)
+        Internal function called by |:GruberContrast|.
+
+    s:health()
+        Internal function called by |:GruberHealth|.
+
+    s:info()
+        Internal function called by |:GruberInfo|.
+
+WARNING: Internal functions are subject to change without notice. Rely on
+documented configuration options and commands for stable customization.
+
+AUTOCOMMAND GROUPS~
+
+    The following autocommand groups are defined:
+
+    GruberDarkerC
+        Configures C and C++ syntax overrides.
+
+    GruberDarkerJava
+        Configures Java syntax overrides.
+
+    GruberDarkerCSharp
+        Configures C# syntax overrides.
+
+    These groups are automatically configured and should not require manual
+    intervention. They ensure proper syntax highlighting regardless of load
+    order or colorscheme reloading.
+
+================================================================================
+11. CHANGELOG                                           *gruber-darker-changelog*
+
+VERSION 1.0.0 (2026-03-19)
+
+    Initial release featuring:
+    • Faithful port of gruber-darker Emacs theme
+    • Support for Vim 8.0+ and Neovim 0.5+
+    • Integration with vim-airline, lightline, and lualine
+    • 85+ Treesitter highlight group definitions
+    • LSP diagnostic integration
+    • Comprehensive documentation (688 lines)
+    • Robust error handling and validation
+    • Language-specific optimizations for C, C++, Java, C#
+    • Terminal color definitions
+    • Customizable options (contrast, transparency, styling)
+    • Seven utility commands for runtime configuration
+    • Professional-grade help documentation
+
+FUTURE DEVELOPMENT
+
+    Planned features for subsequent releases:
+    • Additional language syntax refinements
+    • Extended plugin integration
+    • Community-contributed enhancements
+    • Performance optimizations
+
+================================================================================
+12. CREDITS                                               *gruber-darker-credits*
+
+ORIGINAL EMACS THEME~
+
+    Authors:        Jason R. Blevins
+                    Alexey Kutepov (rexim)
+    
+    Repository:     https://github.com/rexim/gruber-darker-theme
+    
+    Description:    The original gruber-darker theme for GNU Emacs, providing
+                    the color palette and design philosophy upon which this
+                    Vim/Neovim port is based.
+
+VIM/NEOVIM PORT~
+
+    Author:         ThunderBoltCODMYT
+    Repository:     https://github.com/ThunderBoltCODMYT/gruber-darker.vim
+    
+    Description:    Faithful Vim/Neovim port with extensive feature
+                    additions including plugin integration, comprehensive
+                    documentation, and robust error handling.
+
+LICENSE~
+
+    MIT License
+    
+    Copyright (c) 2026 ThunderBoltCODMYT
+    
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+ACKNOWLEDGMENTS~
+
+    Special thanks to the Vim and Neovim communities for their continued
+    development of these exceptional editors and their respective plugin
+    ecosystems.
+
+================================================================================
+vim:tw=80:ts=4:ft=help:norl:

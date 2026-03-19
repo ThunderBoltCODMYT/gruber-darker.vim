@@ -1,52 +1,56 @@
-# Prerequisites
-*.d
+# Vim/Neovim theme repository .gitignore
+# =====================================
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# IDE/Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.tmproj
+*.tmproject
+tmtags
 
-# Precompiled Headers
-*.gch
-*.pch
+# Temporary files
+*.tmp
+*.temp
+.cache/
+*.log
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Build artifacts (if any)
+build/
+dist/
+*.zip
+*.tar.gz
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Screenshots or generated images (uncomment if you add them)
+# screenshots/
+# assets/
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Documentation build artifacts
+doc/tags
+*.html
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Test files (if you add tests later)
+test/
+*.test
+*.spec
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Node modules (if you add any tooling)
+node_modules/
+
+# Backup files
+*.bak
+*.backup
+*.orig
