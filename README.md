@@ -5,7 +5,7 @@
 [![Neovim](https://img.shields.io/badge/Neovim-0.5+-green.svg)](https://neovim.io/)
 [![Release](https://img.shields.io/github/v/release/ThunderBoltCODMYT/gruber-darker.vim)](https://github.com/ThunderBoltCODMYT/gruber-darker.vim/releases)
 
-A faithful, Robust, and pixel perfect Vim/Neovim port of the renowned [gruber-darker-theme.el](https://github.com/rexim/gruber-darker-theme) by Jason R. Blevins and Alexey Kutepov (rexim) originally made for [GNU Emacs](https://www.gnu.org/software/emacs/).
+A faithful, Robust, and pixel perfect Vim/Neovim colorscheme port of the renowned [gruber-darker-theme.el](https://github.com/rexim/gruber-darker-theme) by Jason R. Blevins and Alexey Kutepov (rexim) originally made for [GNU Emacs](https://www.gnu.org/software/emacs/).
 
 > [!NOTE]
 > this work is Licensed under the [MIT License](https://opensource.org/licenses/MIT) as you can see [here.](./LICENSE.md)
