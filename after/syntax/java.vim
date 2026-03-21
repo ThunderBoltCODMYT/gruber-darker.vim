@@ -29,13 +29,14 @@ syn keyword javaOOP new this super instanceof
 syn keyword javaOOP import package
 
 " Special keywords → YELLOW
+" Note: void is a keyword in Java (not a type like in C)
 syn keyword javaKeyword assert void var
 
 " ============================================================
 " TYPES → GRAY (primitive types, type names)
 " ============================================================
 
-" Primitive types → GRAY (Type color)
+" Primitive types → GRAY (quartz via Type)
 syn keyword javaPrimitiveType boolean byte char short int long float double
 
 " Boxed types → GRAY
@@ -51,10 +52,11 @@ syn keyword javaCommonType Thread Runnable Callable Future
 syn keyword javaCommonType Exception RuntimeException Error Throwable
 
 " ============================================================
-" LITERALS → WHITE (numbers, booleans, null)
+" LITERALS → GRAY (booleans and null are constants, not numbers)
 " ============================================================
 
-" Boolean literals → treated as constants (white)
+" true / false / null → Constant (quartz, gray)
+" Use Boolean instead if you want WHITE (Boolean links to Number in this theme)
 syn keyword javaBooleanLiteral true false null
 
 " ============================================================
@@ -65,11 +67,11 @@ hi! link javaKeyword      Keyword     " YELLOW
 hi! link javaModifier     Keyword     " YELLOW
 hi! link javaOOP          Keyword     " YELLOW
 
-hi! link javaPrimitiveType Type       " GRAY
-hi! link javaBoxedType     Type       " GRAY
-hi! link javaCommonType    Type       " GRAY
+hi! link javaPrimitiveType Type       " GRAY (quartz)
+hi! link javaBoxedType     Type       " GRAY (quartz)
+hi! link javaCommonType    Type       " GRAY (quartz)
 
-hi! link javaBooleanLiteral Constant  " Same as numbers (white via Constant)
+hi! link javaBooleanLiteral Constant  " GRAY (quartz via Constant)
 
 " Ensure numbers are white
 hi! link javaNumber       Number      " WHITE
@@ -89,4 +91,4 @@ hi! link javaAnnotation   PreProc     " GRAY (quartz)
 " Type parameters in generics (T, E, K, V, etc.)
 syn match javaTypeParam "<\s*\w\+\s*>" contains=javaTypeParamName
 syn match javaTypeParamName "\w\+" contained
-hi! link javaTypeParamName Type       " GRAY
+hi! link javaTypeParamName Type       " GRAY (quartz)
