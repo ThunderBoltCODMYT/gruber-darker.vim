@@ -394,8 +394,6 @@ hi link  Label       Keyword
 
 call s:hi('Special',        'yellow',  '', '')
 
-" TYPE — gray/quartz for char types and user-defined types
-" (Numeric types will be overridden to white in language-specific section)
 call s:hi('Type',           'quartz',  '', '')
 hi link  StorageClass Type
 hi link  Structure    Type
@@ -460,7 +458,7 @@ hi link @constructor               Function
 " --- Keywords & Control Flow ---
 hi link @keyword                   Keyword
 hi link @keyword.return            Keyword
-hi link @keyword.function          Keyword
+hi link @keyword.function          Function
 hi link @keyword.operator          Operator
 hi link @keyword.import            Include
 hi link @keyword.storage           Keyword
@@ -546,27 +544,15 @@ hi link @diff.plus                 DiffAdd
 hi link @diff.minus                DiffDelete
 hi link @diff.delta                DiffChange
 
-" ============================================================
-" LANGUAGE-SPECIFIC TYPE FIXES
-" 
-" HYBRID APPROACH - Defined in BOTH places for reliability:
-" 1. Here in main theme (works when colorscheme loads/reloads)
-" 2. In after/syntax/*.vim (works when syntax loads)
-"
-" This ensures colors are correct regardless of load order.
-" ============================================================
-
 " --- C/C++ Keywords → YELLOW (not gray) ---
 hi! link cStorageClass   Keyword   " static, extern, register, auto
 hi! link cStructure      Keyword   " struct, union, enum
 hi! link cTypedef        Keyword   " typedef
 
-" C/C++ void keyword → YELLOW (not a type!)
-" This is critical - Vim defaults make void gray, we want yellow
 augroup GruberDarkerC
   autocmd!
-  autocmd FileType c,cpp syn keyword cVoidKeyword void
-  autocmd FileType c,cpp hi! link cVoidKeyword Keyword
+  autocmd FileType c,cpp syn keyword cType void
+  autocmd FileType c,cpp hi! link cType Type
 augroup END
 
 " --- Ensure all number literals are WHITE ---
@@ -701,136 +687,122 @@ endif
 " COMMANDS
 " ============================================================
 
+" Functions are only defined once — reloading the colorscheme
+" (e.g. via toggle commands) re-sources this file, and Vim will
+" error if it tries to redefine a function currently on the call
+" stack. The guard below prevents that entirely.
+
+if !exists('s:functions_loaded')
+  let s:functions_loaded = 1
+
+  " :GruberHelp
+  function! s:show_help()
+    try
+      help gruber-darker
+    catch
+      echo "Gruber-Darker Quick Help"
+      echo "========================"
+      echo ""
+      echo "OPTIONS (set before colorscheme):"
+      echo "  let g:gruber_contrast = 'soft'|'medium'|'hard'"
+      echo "  let g:gruber_transparent_bg = 0|1"
+      echo "  let g:gruber_bold_keywords = 0|1"
+      echo "  let g:gruber_italic_comments = 0|1"
+      echo ""
+      echo "COMMANDS:"
+      echo "  :GruberContrast {level}   - Change contrast"
+      echo "  :GruberHealth             - System diagnostics"
+      echo "  :GruberInfo               - Show current config"
+      echo "  :GruberToggleTransparent  - Toggle transparency"
+      echo "  :GruberToggleBold         - Toggle bold keywords"
+      echo "  :GruberToggleItalic       - Toggle italic comments"
+      echo ""
+      echo "FULL DOCUMENTATION:"
+      echo "  Run :helptags ALL then :help gruber-darker"
+      echo ""
+      echo "REPO: https://github.com/ThunderBoltCODMYT/gruber-darker.vim"
+    endtry
+  endfunction
+
+  " :GruberContrast
+  function! s:contrast_complete(ArgLead, CmdLine, CursorPos)
+    return filter(['soft', 'medium', 'hard'], 'v:val =~ "^" . a:ArgLead')
+  endfunction
+
+  function! s:set_contrast(level)
+    if a:level !=# "soft" && a:level !=# "medium" && a:level !=# "hard"
+      echo "GruberContrast: soft | medium | hard"
+      return
+    endif
+    let g:gruber_contrast = a:level
+    colorscheme gruber-darker
+  endfunction
+
+  " :GruberHealth
+  function! s:health()
+    echo "Gruber-Darker Theme Diagnostics"
+    echo "--------------------------------"
+    echo has("termguicolors")   ? "✓ Truecolor supported"   : "⚠ Truecolor not supported"
+    echo &termguicolors         ? "✓ termguicolors enabled"  : "⚠ termguicolors disabled — add 'set termguicolors' to your config"
+    if has("nvim")
+      echo exists(":TSInstall") ? "✓ Treesitter detected"   : "⚠ Treesitter not detected"
+    endif
+    echo &t_ZH != ""            ? "✓ Italics supported"      : "⚠ Italics may not render — check your terminal"
+    echo "Diagnostics complete"
+  endfunction
+
+  " :GruberInfo
+  function! s:info()
+    echo "┌─ Gruber-Darker ──────────────────────────────┐"
+    echo "│ Contrast        : " . g:gruber_contrast
+    echo "│ Transparent bg  : " . (g:gruber_transparent_bg  ? "on"  : "off")
+    echo "│ Bold keywords   : " . (g:gruber_bold_keywords    ? "on"  : "off")
+    echo "│ Italic comments : " . (g:gruber_italic_comments  ? "on"  : "off")
+    echo "├─ Palette ────────────────────────────────────┤"
+    echo "│ fg        #e4e4ef   bg        #181818"
+    echo "│ yellow    #ffdd33   green     #73c936"
+    echo "│ niagara   #96a6c8   quartz    #95a99f"
+    echo "│ wisteria  #9e95c7   brown     #cc8c3c"
+    echo "│ red       #f43841   red-1     #c73c3f"
+    echo "└──────────────────────────────────────────────┘"
+    echo "Tip: override any color with g:gruber_palette"
+  endfunction
+
+  " :GruberToggleTransparent
+  function! s:toggle_transparent()
+    let g:gruber_transparent_bg = g:gruber_transparent_bg ? 0 : 1
+    colorscheme gruber-darker
+    echo "Gruber-Darker: transparent bg " . (g:gruber_transparent_bg ? "ON" : "OFF")
+  endfunction
+
+  " :GruberToggleBold
+  function! s:toggle_bold()
+    let g:gruber_bold_keywords = g:gruber_bold_keywords ? 0 : 1
+    colorscheme gruber-darker
+    echo "Gruber-Darker: bold keywords " . (g:gruber_bold_keywords ? "ON" : "OFF")
+  endfunction
+
+  " :GruberToggleItalic
+  function! s:toggle_italic()
+    let g:gruber_italic_comments = g:gruber_italic_comments ? 0 : 1
+    colorscheme gruber-darker
+    echo "Gruber-Darker: italic comments " . (g:gruber_italic_comments ? "ON" : "OFF")
+  endfunction
+
+endif
+
 " ------------------------------------------------------------
-" :GruberHelp — quick access to documentation
+" Command definitions — use ! so reloading never causes errors.
+" These are safe to redefine; only function bodies need the guard.
 " ------------------------------------------------------------
 
-command! GruberHelp call s:show_help()
-
-function! s:show_help()
-  " Try to open the help file
-  try
-    help gruber-darker
-  catch
-    " If help tags not generated yet, show inline help
-    echo "Gruber-Darker Quick Help"
-    echo "========================"
-    echo ""
-    echo "OPTIONS (set before colorscheme):"
-    echo "  let g:gruber_contrast = 'soft'|'medium'|'hard'"
-    echo "  let g:gruber_transparent_bg = 0|1"
-    echo "  let g:gruber_bold_keywords = 0|1"
-    echo "  let g:gruber_italic_comments = 0|1"
-    echo ""
-    echo "COMMANDS:"
-    echo "  :GruberContrast {level}   - Change contrast"
-    echo "  :GruberHealth             - System diagnostics"
-    echo "  :GruberInfo               - Show current config"
-    echo "  :GruberToggleTransparent  - Toggle transparency"
-    echo "  :GruberToggleBold         - Toggle bold keywords"
-    echo "  :GruberToggleItalic       - Toggle italic comments"
-    echo ""
-    echo "FULL DOCUMENTATION:"
-    echo "  Run :helptags ALL then :help gruber-darker"
-    echo ""
-    echo "REPO: https://github.com/ThunderBoltCODMYT/gruber-darker.vim"
-  endtry
-endfunction
-
-" ------------------------------------------------------------
-" :GruberContrast soft|medium|hard
-" ------------------------------------------------------------
-
+command!          GruberHelp                                              call s:show_help()
 command! -nargs=1 -complete=customlist,s:contrast_complete GruberContrast call s:set_contrast(<f-args>)
-
-function! s:contrast_complete(ArgLead, CmdLine, CursorPos)
-  return filter(['soft', 'medium', 'hard'], 'v:val =~ "^" . a:ArgLead')
-endfunction
-
-function! s:set_contrast(level)
-  if a:level !=# "soft" && a:level !=# "medium" && a:level !=# "hard"
-    echo "GruberContrast: soft | medium | hard"
-    return
-  endif
-  let g:gruber_contrast = a:level
-  colorscheme gruber-darker
-endfunction
-
-" ------------------------------------------------------------
-" :GruberHealth
-" ------------------------------------------------------------
-
-command! GruberHealth call s:health()
-
-function! s:health()
-  echo "Gruber-Darker Theme Diagnostics"
-  echo "--------------------------------"
-  echo has("termguicolors")   ? "✓ Truecolor supported"   : "⚠ Truecolor not supported"
-  echo &termguicolors         ? "✓ termguicolors enabled"  : "⚠ termguicolors disabled — add 'set termguicolors' to your config"
-  if has("nvim")
-    echo exists(":TSInstall") ? "✓ Treesitter detected"   : "⚠ Treesitter not detected"
-  endif
-  echo &t_ZH != ""            ? "✓ Italics supported"      : "⚠ Italics may not render — check your terminal"
-  echo "Diagnostics complete"
-endfunction
-
-" ------------------------------------------------------------
-" :GruberInfo — show active config state
-" ------------------------------------------------------------
-
-command! GruberInfo call s:info()
-
-function! s:info()
-  echo "┌─ Gruber-Darker ──────────────────────────────┐"
-  echo "│ Contrast        : " . g:gruber_contrast
-  echo "│ Transparent bg  : " . (g:gruber_transparent_bg  ? "on"  : "off")
-  echo "│ Bold keywords   : " . (g:gruber_bold_keywords    ? "on"  : "off")
-  echo "│ Italic comments : " . (g:gruber_italic_comments  ? "on"  : "off")
-  echo "├─ Palette ────────────────────────────────────┤"
-  echo "│ fg        #e4e4ef   bg        #181818"
-  echo "│ yellow    #ffdd33   green     #73c936"
-  echo "│ niagara   #96a6c8   quartz    #95a99f"
-  echo "│ wisteria  #9e95c7   brown     #cc8c3c"
-  echo "│ red       #f43841   red-1     #c73c3f"
-  echo "└──────────────────────────────────────────────┘"
-  echo "Tip: override any color with g:gruber_palette"
-endfunction
-
-" ------------------------------------------------------------
-" :GruberToggleTransparent
-" ------------------------------------------------------------
-
-command! GruberToggleTransparent call s:toggle_transparent()
-
-function! s:toggle_transparent()
-  let g:gruber_transparent_bg = g:gruber_transparent_bg ? 0 : 1
-  colorscheme gruber-darker
-  echo "Gruber-Darker: transparent bg " . (g:gruber_transparent_bg ? "ON" : "OFF")
-endfunction
-
-" ------------------------------------------------------------
-" :GruberToggleBold
-" ------------------------------------------------------------
-
-command! GruberToggleBold call s:toggle_bold()
-
-function! s:toggle_bold()
-  let g:gruber_bold_keywords = g:gruber_bold_keywords ? 0 : 1
-  colorscheme gruber-darker
-  echo "Gruber-Darker: bold keywords " . (g:gruber_bold_keywords ? "ON" : "OFF")
-endfunction
-
-" ------------------------------------------------------------
-" :GruberToggleItalic
-" ------------------------------------------------------------
-
-command! GruberToggleItalic call s:toggle_italic()
-
-function! s:toggle_italic()
-  let g:gruber_italic_comments = g:gruber_italic_comments ? 0 : 1
-  colorscheme gruber-darker
-  echo "Gruber-Darker: italic comments " . (g:gruber_italic_comments ? "ON" : "OFF")
-endfunction
+command!          GruberHealth                                            call s:health()
+command!          GruberInfo                                              call s:info()
+command!          GruberToggleTransparent                                 call s:toggle_transparent()
+command!          GruberToggleBold                                        call s:toggle_bold()
+command!          GruberToggleItalic                                      call s:toggle_italic()
 
 " ============================================================
 " STARTUP VALIDATION REPORT
