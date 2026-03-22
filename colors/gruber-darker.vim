@@ -132,8 +132,7 @@ let s:palette = {
   \ }
 
 " ------------------------------------------------------------
-" USER PALETTE OVERRIDE — validated before apply
-"
+" USER PALETTE OVERRIDE — validated before applying
 " Every entry is checked for:
 "   • correct type (must be a dict)
 "   • each value is a 2-element list
@@ -379,7 +378,7 @@ hi link  Character String
 
 " NUMBERS — bright white for all numeric literals
 call s:hi('Number',         'white',  '', '')
-hi link  Boolean Number
+hi link  Boolean cConstant " the path is like this: Boolean(bool values) -> cConstant(highlight group) =>(inherits from) Constant(also a highlight group, defined as gray, thus, bool values are gray); 
 hi link  Float   Number
 
 call s:hi('Function',       'niagara', '', '')
