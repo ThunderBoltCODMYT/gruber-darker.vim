@@ -100,7 +100,7 @@ let s:italic = g:gruber_italic_comments ? 'italic' : 'NONE'
 
 " ============================================================
 " FULL PALETTE — mirrors gruber-darker-theme.el exactly
-" 
+"
 " Format: ['#hexcolor', cterm_number]
 " - First element: GUI color (24-bit)
 " - Second element: Terminal color (256-color fallback)
@@ -378,7 +378,7 @@ hi link  Character String
 
 " NUMBERS — bright white for all numeric literals
 call s:hi('Number',         'white',  '', '')
-hi link  Boolean cConstant " the path is like this: Boolean(bool values) -> cConstant(highlight group) =>(inherits from) Constant(also a highlight group, defined as gray, thus, bool values are gray); 
+hi link  Boolean cConstant " the path is like this: Boolean(bool values) -> cConstant(highlight group) =>(inherits from) Constant(also a highlight group, defined as gray, thus, bool values are gray);
 hi link  Float   Number
 
 call s:hi('Function',       'niagara', '', '')
@@ -435,109 +435,112 @@ hi DiagnosticUnderlineHint  gui=undercurl guisp=#95a99f cterm=underline
 " TREESITTER (THIS IS NEOVIM/NVIM ONLY, MIGHT GET W18 ERRORS IF YOU LOAD THIS INSIDE OF GVIM) — all hi link, zero execute overhead
 " ============================================================
 
-" --- Core Language ---
-hi link @comment                   Comment
-hi link @comment.documentation     SpecialComment
-hi link @string                    String
-hi link @string.documentation      SpecialComment
-hi link @character                 Character
-hi link @number                    Number
-hi link @float                     Float
-hi link @boolean                   Boolean
+if has('nvim')
+    " --- Core Language ---
+    hi link @comment                   Comment
+    hi link @comment.documentation     SpecialComment
+    hi link @string                    String
+    hi link @string.documentation      SpecialComment
+    hi link @character                 Character
+    hi link @number                    Number
+    hi link @float                     Float
+    hi link @boolean                   Boolean
 
-" --- Functions & Methods ---
-hi link @function                  Function
-hi link @function.call             Function
-hi link @function.builtin          Special
-hi link @function.macro            Macro
-hi link @method                    Function
-hi link @method.call               Function
-hi link @constructor               Function
+    " --- Functions & Methods ---
+    hi link @function                  Function
+    hi link @function.call             Function
+    hi link @function.builtin          Special
+    hi link @function.macro            Macro
+    hi link @method                    Function
+    hi link @method.call               Function
+    hi link @constructor               Function
 
-" --- Keywords & Control Flow ---
-hi link @keyword                   Keyword
-hi link @keyword.return            Keyword
-hi link @keyword.function          Function
-hi link @keyword.operator          Operator
-hi link @keyword.import            Include
-hi link @keyword.storage           Keyword
-hi link @keyword.type              Keyword
-hi link @conditional               Conditional
-hi link @repeat                    Repeat
-hi link @exception                 Exception
-hi link @operator                  Operator
+    " --- Keywords & Control Flow ---
+    hi link @keyword                   Keyword
+    hi link @keyword.return            Keyword
+    hi link @keyword.function          Function
+    hi link @keyword.operator          Operator
+    hi link @keyword.import            Include
+    hi link @keyword.storage           Keyword
+    hi link @keyword.type              Keyword
+    hi link @conditional               Conditional
+    hi link @repeat                    Repeat
+    hi link @exception                 Exception
+    hi link @operator                  Operator
 
-" --- Types & Constants ---
-hi link @type                      Type
-hi link @type.builtin              Type
-hi link @type.definition           Typedef
-hi link @type.qualifier            Keyword
-hi link @constant                  Constant
-hi link @constant.builtin          Special
-hi link @constant.macro            Define
-hi link @variable                  Identifier
-hi link @variable.builtin          Special
+    " --- Types & Constants ---
+    hi link @type                      Type
+    hi link @type.builtin              Type
+    hi link @type.definition           Typedef
+    hi link @type.qualifier            Keyword
+    hi link @constant                  Constant
+    hi link @constant.builtin          Special
+    hi link @constant.macro            Define
+    hi link @variable                  Identifier
+    hi link @variable.builtin          Special
 
-" --- Structure ---
-hi link @field                     Identifier
-hi link @property                  Identifier
-hi link @parameter                 Identifier
-hi link @namespace                 Type
-hi link @include                   Include
-hi link @preproc                   PreProc
-hi link @define                    Define
-hi link @macro                     Macro
-hi link @label                     Label
+    " --- Structure ---
+    hi link @field                     Identifier
+    hi link @property                  Identifier
+    hi link @parameter                 Identifier
+    hi link @namespace                 Type
+    hi link @include                   Include
+    hi link @preproc                   PreProc
+    hi link @define                    Define
+    hi link @macro                     Macro
+    hi link @label                     Label
 
-" --- Syntax Elements ---
-hi link @punctuation.delimiter     Delimiter
-hi link @punctuation.bracket       Delimiter
-hi link @punctuation.special       SpecialChar
-hi link @tag                       Keyword
-hi link @tag.attribute             Identifier
-hi link @tag.delimiter             Delimiter
+    " --- Syntax Elements ---
+    hi link @punctuation.delimiter     Delimiter
+    hi link @punctuation.bracket       Delimiter
+    hi link @punctuation.special       SpecialChar
+    hi link @tag                       Keyword
+    hi link @tag.attribute             Identifier
+    hi link @tag.delimiter             Delimiter
 
-" --- Markup (replacing @text.* - future-proof) ---
-hi link @markup.heading            Title
-hi link @markup.heading.1          Title
-hi link @markup.heading.2          Title  
-hi link @markup.heading.3          Title
-hi link @markup.strong             Bold
-hi link @markup.emphasis           Italic
-hi link @markup.strikethrough      Comment
-hi link @markup.underline          Underlined
-hi link @markup.link               Underlined
-hi link @markup.link.url           Underlined
-hi link @markup.raw                String
-hi link @markup.raw.block          String
-hi link @markup.list               Special
-hi link @markup.list.checked       Special
-hi link @markup.list.unchecked     Comment
+    " --- Markup (replacing @text.* - future-proof) ---
+    hi link @markup.heading            Title
+    hi link @markup.heading.1          Title
+    hi link @markup.heading.2          Title
+    hi link @markup.heading.3          Title
+    hi link @markup.strong             Bold
+    hi link @markup.emphasis           Italic
+    hi link @markup.strikethrough      Comment
+    hi link @markup.underline          Underlined
+    hi link @markup.link               Underlined
+    hi link @markup.link.url           Underlined
+    hi link @markup.raw                String
+    hi link @markup.raw.block          String
+    hi link @markup.list               Special
+    hi link @markup.list.checked       Special
+    hi link @markup.list.unchecked     Comment
 
-" --- Annotations & Attributes ---
-hi link @attribute                 PreProc
-hi link @annotation                PreProc
+    " --- Annotations & Attributes ---
+    hi link @attribute                 PreProc
+    hi link @annotation                PreProc
 
-" --- LSP Semantic Tokens ---
-hi link @lsp.type.class            Type
-hi link @lsp.type.decorator        Function
-hi link @lsp.type.enum             Type
-hi link @lsp.type.interface        Type
-hi link @lsp.type.struct           Type
-hi link @lsp.type.typeParameter    Type
-hi link @lsp.type.parameter        Identifier
-hi link @lsp.type.variable         Identifier
-hi link @lsp.type.property         Identifier
-hi link @lsp.type.enumMember       Constant
-hi link @lsp.type.function         Function
-hi link @lsp.type.method           Function
-hi link @lsp.type.macro            Macro
-hi link @lsp.type.comment          Comment
+    " --- LSP Semantic Tokens ---
+    hi link @lsp.type.class            Type
+    hi link @lsp.type.decorator        Function
+    hi link @lsp.type.enum             Type
+    hi link @lsp.type.interface        Type
+    hi link @lsp.type.struct           Type
+    hi link @lsp.type.typeParameter    Type
+    hi link @lsp.type.parameter        Identifier
+    hi link @lsp.type.variable         Identifier
+    hi link @lsp.type.property         Identifier
+    hi link @lsp.type.enumMember       Constant
+    hi link @lsp.type.function         Function
+    hi link @lsp.type.method           Function
+    hi link @lsp.type.macro            Macro
+    hi link @lsp.type.comment          Comment
 
-" --- Diagnostics ---
-hi link @error                     Error
-hi link @warning                   WarningMsg
+    " --- Diagnostics ---
+    hi link @error                     Error
+    hi link @warning                   WarningMsg
+endif
 
+" --------------------------------------------------
 " --- Diff ---
 hi link @diff.plus                 DiffAdd
 hi link @diff.minus                DiffDelete
