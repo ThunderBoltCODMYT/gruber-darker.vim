@@ -538,14 +538,14 @@ if has('nvim')
     " --- Diagnostics ---
     hi link @error                     Error
     hi link @warning                   WarningMsg
+
+    " --- Diff ---
+    hi link @diff.plus                 DiffAdd
+    hi link @diff.minus                DiffDelete
+    hi link @diff.delta                DiffChange
 endif
 
 " --------------------------------------------------
-" --- Diff ---
-hi link @diff.plus                 DiffAdd
-hi link @diff.minus                DiffDelete
-hi link @diff.delta                DiffChange
-
 " --- C/C++ Keywords → YELLOW (not gray) ---
 hi! link cStorageClass   Keyword   " static, extern, register, auto
 hi! link cStructure      Keyword   " struct, union, enum
