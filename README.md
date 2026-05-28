@@ -27,9 +27,15 @@ A faithful, Robust, and pixel perfect Vim/Neovim port of the renowned [gruber-da
 
 ## Screenshots:
 
-#### preview.png
+### FROM EMACS:
 
-![preview.png](./preview/preview.png)
+![new2.png](./preview/new2.png)
+
+### FROM GVIM:
+
+#### new1.png
+
+![new1.png](./preview/new1.png)
 
 #### my_setup.png
 
