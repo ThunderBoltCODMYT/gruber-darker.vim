@@ -231,25 +231,6 @@ if exists("g:gruber_palette")
 endif
 
 " ------------------------------------------------------------
-" CONTRAST SYSTEM
-" (g:gruber_contrast is guaranteed valid by this point)
-" ------------------------------------------------------------
-
-if g:gruber_contrast ==# "soft"
-  let s:palette.bg  = ['#1c1c1c', 234]
-  let s:palette.bg1 = ['#262626', 235]
-  let s:palette.bg2 = ['#303030', 236]
-elseif g:gruber_contrast ==# "hard"
-  let s:palette.bg  = ['#141414', 232]
-  let s:palette.bg1 = ['#202020', 234]
-  let s:palette.bg2 = ['#2a2a2a', 235]
-endif
-
-if g:gruber_transparent_bg
-  let s:palette.bg = ['NONE', 'NONE']
-endif
-
-" ------------------------------------------------------------
 " PRECOMPUTE COLOR STRINGS
 "
 " Each palette entry is re-validated here as a safety net in
