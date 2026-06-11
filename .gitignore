@@ -39,7 +39,6 @@ dist/
 # assets/
 
 # Documentation build artifacts
-doc/tags
 *.html
 
 # Test files (if you add tests later)
