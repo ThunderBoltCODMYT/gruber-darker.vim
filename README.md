@@ -294,7 +294,7 @@ You can see the [CONTRIBUTING.md here](./CONTRIBUTING.md)
 
 ---
 
-**Version**: 1.0.6 
+**Version**: 1.0.7 
 **Release Date**: March 19, 2026
 **Repository**: <https://github.com/ThunderBoltCODMYT/gruber-darker.vim>
 **Author**: ThunderBoltCODMYT
